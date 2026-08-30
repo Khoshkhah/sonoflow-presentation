@@ -958,38 +958,35 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Authentication Logic
-// SHA-256 hash for password: 'sonoflow2026'
-const AUTH_HASH = '95dd06b59a360a1ca13bd68ed931384251154b7f1958f7984004b51bcb20ef24';
 const lockScreen = document.getElementById('lockScreen');
 const passInput = document.getElementById('passInput');
 const authError = document.getElementById('authError');
 
-async function sha256(message) {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+function isAuthed() {
+  try {
+    return localStorage.getItem('sonoflow_auth_token') === 'unlocked_2026' || sessionStorage.getItem('sonoflow_auth_token') === 'unlocked_2026';
+  } catch(e) { return false; }
 }
 
-// Check session storage on load
-if ((localStorage.getItem("sonoflow_deck_auth") === "1" || sessionStorage.getItem("sonoflow_deck_auth") === "1")) {
-  lockScreen.classList.add('unlocked');
+if (isAuthed()) {
+  document.documentElement.classList.add('sono-unlocked');
+  if (lockScreen) lockScreen.classList.add('unlocked');
 }
 
-async function handleAuth(e) {
+function handleAuth(e) {
   if (e) e.preventDefault();
-  const inputVal = passInput.value.trim();
-  if (!inputVal) return;
-  
-  const hash = await sha256(inputVal);
-  if (hash === AUTH_HASH) {
-    localStorage.setItem("sonoflow_deck_auth", "1"); sessionStorage.setItem("sonoflow_deck_auth", "1");
-    lockScreen.classList.add('unlocked');
-    authError.style.display = 'none';
+  const val = passInput ? passInput.value.trim() : '';
+  if (val.toLowerCase() === 'sonoflow2026') {
+    try { localStorage.setItem('sonoflow_auth_token', 'unlocked_2026'); } catch(e){}
+    try { sessionStorage.setItem('sonoflow_auth_token', 'unlocked_2026'); } catch(e){}
+    document.documentElement.classList.add('sono-unlocked');
+    if (lockScreen) lockScreen.classList.add('unlocked');
+    if (authError) authError.style.display = 'none';
   } else {
-    authError.style.display = 'block';
-    passInput.select();
+    if (authError) authError.style.display = 'block';
+    if (passInput) passInput.select();
   }
+  return false;
 }
 </script>
 </body>
