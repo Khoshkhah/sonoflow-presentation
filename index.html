@@ -516,6 +516,14 @@ p.lead {
     <button class="btn-theme" id="themeBtn" title="Toggle Theme">
       <span id="themeIcon">🌙</span> <span id="themeText">Dark</span>
     </button>
+    <a href="./viz/app.html" target="_blank" class="btn-demo btn-demo-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      Live Studio (app.html)
+    </a>
+    <a href="./viz/sensors.html" target="_blank" class="btn-demo btn-demo-secondary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      Sensor Map (sensors.html)
+    </a>
   </div>
 </header>
 
@@ -838,18 +846,24 @@ p.lead {
     <p class="lead">Sparse physical sensors become a dense, city-wide network of live virtual sensors. Accurate, fast, and capital efficient.</p>
 
     <div class="grid-3" style="margin-top: 1.5rem;">
-      <div class="card" style="border-left: 4px solid var(--accent);">
-        <h3 style="color: var(--accent);">100% City Visibility</h3>
-        <p>Sparse physical counters are transformed into a coherent, city-wide virtual sensor network with calibrated confidence bands on every street.</p>
-      </div>
-      <div class="card" style="border-left: 4px solid var(--emerald);">
-        <h3 style="color: var(--emerald);">Capital-Efficient Siting</h3>
-        <p>Scores physical candidate sites by uncertain throughput reduction—up to 77% of total uncertainty reduction comes from network reach.</p>
-      </div>
-      <div class="card" style="border-left: 4px solid var(--violet);">
-        <h3 style="color: var(--violet);">Transparent & Audit-Ready</h3>
-        <p>Every single estimate is backed by an explicit 4-layer physical decomposition and full covariance audit trails for municipal engineering.</p>
-      </div>
+      <a href="./viz/app.html" target="_blank" class="card" style="text-decoration: none; border-left: 4px solid var(--accent);">
+        <h3 style="color: var(--accent); display: flex; align-items: center; justify-content: space-between;">
+          Live Studio (app.html) <span>↗</span>
+        </h3>
+        <p>Interactive 24-hour city flow map, traffic curves, and uncertainty bands.</p>
+      </a>
+      <a href="./viz/sensors.html" target="_blank" class="card" style="text-decoration: none; border-left: 4px solid var(--emerald);">
+        <h3 style="color: var(--emerald); display: flex; align-items: center; justify-content: space-between;">
+          Sensor Map (sensors.html) <span>↗</span>
+        </h3>
+        <p>Sensor permanence, historical tube counts, and unmeasured reach.</p>
+      </a>
+      <a href="./docs/hub.html" target="_blank" class="card" style="text-decoration: none; border-left: 4px solid var(--violet);">
+        <h3 style="color: var(--violet); display: flex; align-items: center; justify-content: space-between;">
+          Docs Hub (hub.html) <span>↗</span>
+        </h3>
+        <p>Comprehensive mathematical specifications, formulas, and pipeline docs.</p>
+      </a>
     </div>
   </div>
 
