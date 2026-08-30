@@ -95,15 +95,14 @@ font:13px system-ui,sans-serif;color:#16181d;max-height:70%;overflow:auto}
 .flt-ctrl label{cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px}
 .flt-ctrl label:hover{color:#1a6bd6}
 /* panel mode: a full-height side panel; the map (and every right-anchored control) shifts left.
-   --rs-side is set on <body>
-<style id="gateLockStyles">
+   --rs-side is set on <body><style id="sonoAuthStyles">
 #gateLockScreen {
   position: fixed;
   inset: 0;
   background: #0b0f17;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 999999;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 9999999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,63 +114,84 @@ font:13px system-ui,sans-serif;color:#16181d;max-height:70%;overflow:auto}
 }
 .gate-card {
   background: #182234;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
   padding: 2.5rem 2rem;
   width: 100%;
   max-width: 400px;
   text-align: center;
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
 }
-.gate-card h2 { font-size: 1.4rem; margin: 0.5rem 0 0.25rem; font-weight: 700; }
+.gate-card h2 { font-size: 1.4rem; margin: 0.5rem 0 0.25rem; font-weight: 700; color: #fff; }
 .gate-card p { font-size: 0.88rem; color: #94a3b8; margin-bottom: 1.5rem; line-height: 1.45; }
-.gate-input { width: 100%; padding: 0.85rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #fff; font-size: 0.95rem; box-sizing: border-box; outline: none; margin-bottom: 1rem; }
+.gate-input { width: 100%; padding: 0.85rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.35); color: #fff; font-size: 0.95rem; box-sizing: border-box; outline: none; margin-bottom: 1rem; }
 .gate-input:focus { border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2,132,199,0.3); }
 .gate-btn { width: 100%; padding: 0.85rem 1rem; border-radius: 10px; border: none; background: #0284c7; color: #fff; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
-.gate-btn:hover { opacity: 0.9; }
+.gate-btn:hover { opacity: 0.92; }
 .gate-err { display: none; margin-top: 0.75rem; font-size: 0.82rem; color: #fb7185; }
 </style>
 <div id="gateLockScreen">
   <div class="gate-card">
-    <div style="font-size: 2rem;">🔒</div>
+    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🔒</div>
     <h2>SonoFlow Protected Visualizer</h2>
     <p>Confidential Pilot Artifact. Please enter your team password to access.</p>
-    <form onsubmit="checkGateAuth(event)">
-      <input type="password" id="gatePassInput" class="gate-input" placeholder="Enter access password" autofocus required>
-      <button type="submit" class="gate-btn">Unlock Visualizer →</button>
+    <form id="gateForm" onsubmit="event.preventDefault(); window.checkGateAuth(); return false;">
+      <input type="password" id="gatePassInput" class="gate-input" placeholder="Enter access password" autocomplete="current-password" autofocus required>
+      <button type="submit" id="gateSubmitBtn" class="gate-btn">Unlock Visualizer →</button>
       <div id="gateAuthErr" class="gate-err">Incorrect password. Please try again.</div>
     </form>
   </div>
 </div>
-<script>
-const GATE_AUTH_HASH = '95dd06b59a360a1ca13bd68ed931384251154b7f1958f7984004b51bcb20ef24';
-function syncAuth() {
-  if (localStorage.getItem('sonoflow_deck_auth') === '1' || sessionStorage.getItem('sonoflow_deck_auth') === '1') {
+<script id="sonoAuthScript">
+(function() {
+  const GATE_AUTH_HASH = '95dd06b59a360a1ca13bd68ed931384251154b7f1958f7984004b51bcb20ef24';
+  
+  function unlockUI() {
     const g = document.getElementById('gateLockScreen');
     if (g) g.classList.add('unlocked');
   }
-}
-syncAuth();
-document.addEventListener('DOMContentLoaded', syncAuth);
 
-async function checkGateAuth(e) {
-  if (e) e.preventDefault();
-  const inp = document.getElementById('gatePassInput');
-  const err = document.getElementById('gateAuthErr');
-  const msgBuffer = new TextEncoder().encode(inp.value.trim());
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  if (hash === GATE_AUTH_HASH) {
-    localStorage.setItem('sonoflow_deck_auth', '1');
-    sessionStorage.setItem('sonoflow_deck_auth', '1');
-    document.getElementById('gateLockScreen').classList.add('unlocked');
-  } else {
-    err.style.display = 'block';
-    inp.select();
+  function isAuth() {
+    try {
+      return localStorage.getItem('sonoflow_deck_auth') === '1' || sessionStorage.getItem('sonoflow_deck_auth') === '1';
+    } catch(e) {
+      return false;
+    }
   }
-}
+
+  if (isAuth()) {
+    unlockUI();
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    if (isAuth()) unlockUI();
+  });
+
+  window.checkGateAuth = async function() {
+    const inp = document.getElementById('gatePassInput');
+    const err = document.getElementById('gateAuthErr');
+    
+    try {
+      const msgBuffer = new TextEncoder().encode(inp.value.trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      
+      if (hash === GATE_AUTH_HASH) {
+        try { localStorage.setItem('sonoflow_deck_auth', '1'); } catch(e){}
+        try { sessionStorage.setItem('sonoflow_deck_auth', '1'); } catch(e){}
+        unlockUI();
+        if (err) err.style.display = 'none';
+      } else {
+        if (err) err.style.display = 'block';
+        inp.select();
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  };
+})();
 </script>
+
 
 <style>
 #gateLockScreen {
@@ -208,18 +228,7 @@ async function checkGateAuth(e) {
 .gate-btn:hover { opacity: 0.9; }
 .gate-err { display: none; margin-top: 0.75rem; font-size: 0.82rem; color: #fb7185; }
 </style>
-<div id="gateLockScreen">
-  <div class="gate-card">
-    <div style="font-size: 2rem;">🔒</div>
-    <h2>SonoFlow Protected Visualizer</h2>
-    <p>Confidential Pilot Artifact. Please enter your team password to access.</p>
-    <form onsubmit="checkGateAuth(event)">
-      <input type="password" id="gatePassInput" class="gate-input" placeholder="Enter access password" autofocus required>
-      <button type="submit" class="gate-btn">Unlock Visualizer →</button>
-      <div id="gateAuthErr" class="gate-err">Incorrect password. Please try again.</div>
-    </form>
-  </div>
-</div>
+
 <script>
 const GATE_AUTH_HASH = '95dd06b59a360a1ca13bd68ed931384251154b7f1958f7984004b51bcb20ef24';
 if (sessionStorage.getItem('sonoflow_deck_auth') === '1') {
