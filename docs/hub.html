@@ -204,7 +204,7 @@
   </style>
 </head>
 <body>
-<style>
+<style id="gateLockStyles">
 #gateLockScreen {
   position: fixed;
   inset: 0;
@@ -253,10 +253,15 @@
 </div>
 <script>
 const GATE_AUTH_HASH = '95dd06b59a360a1ca13bd68ed931384251154b7f1958f7984004b51bcb20ef24';
-if (sessionStorage.getItem('sonoflow_deck_auth') === '1') {
-  const g = document.getElementById('gateLockScreen');
-  if (g) g.classList.add('unlocked');
+function syncAuth() {
+  if (localStorage.getItem('sonoflow_deck_auth') === '1' || sessionStorage.getItem('sonoflow_deck_auth') === '1') {
+    const g = document.getElementById('gateLockScreen');
+    if (g) g.classList.add('unlocked');
+  }
 }
+syncAuth();
+document.addEventListener('DOMContentLoaded', syncAuth);
+
 async function checkGateAuth(e) {
   if (e) e.preventDefault();
   const inp = document.getElementById('gatePassInput');
@@ -266,6 +271,7 @@ async function checkGateAuth(e) {
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   if (hash === GATE_AUTH_HASH) {
+    localStorage.setItem('sonoflow_deck_auth', '1');
     sessionStorage.setItem('sonoflow_deck_auth', '1');
     document.getElementById('gateLockScreen').classList.add('unlocked');
   } else {

@@ -978,7 +978,7 @@ async function sha256(message) {
 }
 
 // Check session storage on load
-if (sessionStorage.getItem('sonoflow_deck_auth') === '1') {
+if ((localStorage.getItem("sonoflow_deck_auth") === "1" || sessionStorage.getItem("sonoflow_deck_auth") === "1")) {
   lockScreen.classList.add('unlocked');
 }
 
@@ -989,7 +989,7 @@ async function handleAuth(e) {
   
   const hash = await sha256(inputVal);
   if (hash === AUTH_HASH) {
-    sessionStorage.setItem('sonoflow_deck_auth', '1');
+    localStorage.setItem("sonoflow_deck_auth", "1"); sessionStorage.setItem("sonoflow_deck_auth", "1");
     lockScreen.classList.add('unlocked');
     authError.style.display = 'none';
   } else {
