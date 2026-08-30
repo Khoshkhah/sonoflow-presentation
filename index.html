@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SonoFlow — Startup Pitch & Pilot Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg-gradient: radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+                 radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
+  --panel: rgba(255, 255, 255, 0.88);
+  --panel-border: #e2e8f0;
+  --panel-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --accent: #0284c7;
+  --accent-soft: #e0f2fe;
+  --emerald: #059669;
+  --emerald-soft: #d1fae5;
+  --amber: #d97706;
+  --amber-soft: #fef3c7;
+  --violet: #7c3aed;
+  --violet-soft: #ede9fe;
+  --rose: #e11d48;
+  --rose-soft: #ffe4e6;
+  --formula-bg: #0f172a;
+  --formula-text: #f8fafc;
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #0b0f17;
+  --bg-gradient: radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                 radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+  --panel: rgba(18, 24, 38, 0.82);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.15);
+  --emerald: #34d399;
+  --emerald-soft: rgba(16, 185, 129, 0.15);
+  --amber: #fbbf24;
+  --amber-soft: rgba(245, 158, 11, 0.15);
+  --violet: #c084fc;
+  --violet-soft: rgba(168, 85, 247, 0.15);
+  --rose: #fb7185;
+  --rose-soft: rgba(225, 29, 72, 0.15);
+  --formula-bg: #030712;
+  --formula-text: #f8fafc;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  background-image: var(--bg-gradient);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  user-select: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.deck-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: clamp(2rem, 5vh, 4rem) clamp(2rem, 6vw, 6.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(30px) scale(0.99);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) scale(1);
+}
+
+header {
+  position: fixed;
+  top: 1.5rem;
+  left: 2rem;
+  right: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  pointer-events: none;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.brand-badge {
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+.btn-theme {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--panel-shadow);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.btn-demo {
+  padding: 0.45rem 0.95rem;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.2s ease;
+  box-shadow: var(--panel-shadow);
+}
+.btn-demo-primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+.btn-demo-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+.btn-demo-secondary {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+}
+.btn-demo-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.2vw, 4.4rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.6vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+p.lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.32rem);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin-bottom: 2rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  align-items: center;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1rem;
+}
+.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.85rem;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 1.6rem;
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: blur(12px);
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+}
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+}
+.card h3 {
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+.card p {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.stat-box {
+  display: flex;
+  gap: 3rem;
+  margin: 2rem 0;
+}
+.stat-item .val {
+  font-family: var(--font-display);
+  font-size: 3.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+.stat-item .lbl {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.formula-card {
+  background: var(--formula-bg);
+  color: var(--formula-text);
+  border-radius: 14px;
+  padding: 1.35rem 1.6rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.3vw, 1.08rem);
+  line-height: 1.7;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  margin: 1.25rem 0;
+}
+.formula-card .hl-1 { color: #38bdf8; font-weight: 600; }
+.formula-card .hl-2 { color: #34d399; font-weight: 600; }
+.formula-card .hl-3 { color: #f472b6; font-weight: 600; }
+.formula-card .hl-4 { color: #fbbf24; font-weight: 600; }
+
+.controls {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 2rem;
+  right: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+}
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--panel);
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+}
+.nav-btns {
+  display: flex;
+  gap: 0.6rem;
+}
+.btn-nav {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.15rem;
+  box-shadow: var(--panel-shadow);
+  transition: all 0.2s;
+  outline: none;
+}
+.btn-nav:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.dots {
+  display: flex;
+  gap: 0.5rem;
+}
+.dot {
+  width: 24px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--panel-border);
+  cursor: pointer;
+  transition: background 0.3s, width 0.3s;
+}
+.dot.active {
+  background: var(--accent);
+  width: 46px;
+}
+
+/* Password Gate Modal */
+.lock-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 15, 23, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+.lock-overlay.unlocked {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.lock-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: lockScale 0.3s ease-out;
+}
+@keyframes lockScale {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.lock-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.75rem;
+}
+.lock-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.lock-lead {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.45;
+}
+.input-wrap input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.input-wrap input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+}
+.btn-unlock {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.2s;
+}
+.btn-unlock:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.auth-error {
+  display: none;
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--rose);
+  font-weight: 500;
+}
+.lock-footer {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+</style>
+</head>
+<body>
+
+<!-- Lock Screen Modal -->
+<div id="lockScreen" class="lock-overlay">
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <h2>SonoFlow Presentation</h2>
+    <p class="lock-lead">Confidential Pilot Overview. Please enter your team password to unlock.</p>
+    
+    <form id="authForm" onsubmit="handleAuth(event)">
+      <div class="input-wrap">
+        <input type="password" id="passInput" placeholder="Enter access password" autocomplete="current-password" autofocus required>
+      </div>
+      <button type="submit" id="unlockBtn" class="btn-unlock">Unlock Presentation →</button>
+      <div id="authError" class="auth-error">Incorrect password. Please try again.</div>
+    </form>
+
+    <div class="lock-footer">Default: <code>sonoflow2026</code></div>
+  </div>
+</div>
+
+<header>
+  <div class="brand">
+    <span>SonoFlow</span>
+    <span class="brand-badge">Pilot: Södermalm</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn-theme" id="themeBtn" title="Toggle Theme">
+      <span id="themeIcon">🌙</span> <span id="themeText">Dark</span>
+    </button>
+  </div>
+</header>
+
+<div class="deck-container">
+
+  <!-- SLIDE 1: The Core Value Proposition & Pilot Objective -->
+  <div class="slide active" id="slide-1">
+    <span class="tag">Municipal Delivery Objective</span>
+    <h1>Volume + Calibrated Confidence<br>For Every Single Street Edge</h1>
+    <p class="lead">Instead of publishing an ungrounded single point guess, SonoFlow delivers the <strong>exact estimated hourly flow AND an honest calibrated confidence interval</strong> for all 4,563 streets of Södermalm from a sparse set of physical counting stations.</p>
+
+    <div class="grid-3">
+      <div class="card" style="border-top: 4px solid var(--accent);">
+        <div class="card-num">DELIVERABLE 01</div>
+        <h3>100% Street-Level Coverage</h3>
+        <p>Every single directed edge receives an active estimate, fusing years of historical tube campaigns with live sensors to continuously tighten confidence intervals.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--emerald);">
+        <div class="card-num">DELIVERABLE 02</div>
+        <h3>Calibrated Risk & Error Bars</h3>
+        <p>Every estimate is published with an honest 80% interval (<code>x̂ · [e⁻ᶻˢ, e⁺ᶻˢ]</code>). Cities manage real risk, not assumptions.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--violet);">
+        <div class="card-num">DELIVERABLE 03</div>
+        <h3>Sparse Counters → Full Network Visibility</h3>
+        <p>Physical junction conservation connects the city into a single Gaussian state, turning sparse counters into a dense city-wide virtual sensor network.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: What Drives Traffic & Sources of Uncertainty -->
+  <div class="slide" id="slide-2">
+    <span class="tag">Physical Intuition · Why Traffic Varies</span>
+    <h2>The 4 Real-World Drivers of Traffic Volume</h2>
+    <p class="lead">Before equations, every vehicle count on any street is shaped by four physical drivers—each with its own distinct uncertainty:</p>
+
+    <div class="grid-4" style="margin-top: 1.25rem;">
+      <div class="card" style="border-top: 4px solid var(--accent);">
+        <div class="card-num">DRIVER 1 · THE STREET</div>
+        <h3 style="color: var(--accent);">Street Capacity & Baseline</h3>
+        <p style="margin-bottom: 0.5rem;"><em>How busy is this street in general?</em></p>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;">
+          • Arterials carry 2,000 veh/h, quiet alleys carry 20.<br>
+          • <strong>Uncertainty:</strong> We don't have sensors everywhere.<br>
+          <strong style="color: var(--accent);">→ Modeled as: Level L(e)</strong>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 4px solid var(--emerald);">
+        <div class="card-num">DRIVER 2 · TIME OF DAY</div>
+        <h3 style="color: var(--emerald);">24-Hour Weekly Routine</h3>
+        <p style="margin-bottom: 0.5rem;"><em>When do people actually drive here?</em></p>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;">
+          • Morning 8 AM rush hour vs. 3 AM quiet night.<br>
+          • <strong>Uncertainty:</strong> Different streets peak at different times.<br>
+          <strong style="color: var(--emerald);">→ Modeled as: Rhythm ρ(e,w,h)</strong>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 4px solid var(--rose);">
+        <div class="card-num">DRIVER 3 · THE CALENDAR</div>
+        <h3 style="color: var(--rose);">Seasonality & Holidays</h3>
+        <p style="margin-bottom: 0.5rem;"><em>What time of year is it?</em></p>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;">
+          • Christmas drops, July summer vacation dip.<br>
+          • <strong>Uncertainty:</strong> 0% (known from calendar in advance).<br>
+          <strong style="color: var(--rose);">→ Modeled as: Calendar k(d)</strong>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 4px solid var(--amber);">
+        <div class="card-num">DRIVER 4 · TODAY'S SHOCK</div>
+        <h3 style="color: var(--amber);">Weather & Special Events</h3>
+        <p style="margin-bottom: 0.5rem;"><em>How did the whole city run today?</em></p>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;">
+          • Heavy rain, snow, concerts, protests.<br>
+          • <strong>Uncertainty:</strong> Unknown until live sensors report.<br>
+          <strong style="color: var(--amber);">→ Modeled as: Day Factor f(d)</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Idiosyncratic Noise Clarification -->
+    <div style="margin-top: 1rem; background: var(--panel); border: 1px solid var(--panel-border); border-left: 3px solid var(--text-dim); border-radius: 8px; padding: 0.65rem 1.1rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.83rem; color: var(--text-muted); box-shadow: var(--panel-shadow);">
+      <div>
+        <strong style="color: var(--text);">+ Natural Daily Randomness (σ_idio):</strong>
+        Even when all 4 drivers are known, individual drivers depart minutes apart — creating unavoidable physical scatter.
+      </div>
+      <span style="font-family: var(--font-mono); font-size: 0.72rem; background: rgba(148, 163, 184, 0.15); color: var(--text-muted); padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 600; white-space: nowrap; margin-left: 1rem;">Why We Need A Model</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: The Core Mathematical Model -->
+  <div class="slide" id="slide-3">
+    <span class="tag">Core Mathematical Model</span>
+    <h2>Transparent 4-Layer Flow Decomposition</h2>
+    <p class="lead">Every hour on every street is broken down into four explainable physical components:</p>
+
+    <div class="formula-card">
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+        <div><b>Expected Mean (μ):</b> &nbsp;log <span class="hl-1">Flow(e,d,h)</span> = <span class="hl-1">L(e)</span> + <span class="hl-2">ρ(e,w,h)</span> + <span class="hl-3">k(d)</span> + <span class="hl-4">λ(e)·f(d)</span></div>
+      </div>
+      <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-size: 0.88em;">
+        <div><b>80% Honest Interval:</b> &nbsp;[lo, hi] = exp(<span class="hl-1">μ</span> ∓ 1.2816 · <span style="color: #f43f5e; font-weight: 600;">σ</span>)</div>
+        <div style="color: #94a3b8; font-size: 0.95em;"><b>σ²</b> = <span class="hl-1">Var(L(e))</span> + <span class="hl-2">σ_ρ²(e,w,h)</span> + <span class="hl-4">λ(e)²·Var(f(d))</span> + <span style="color: #e2e8f0;">σ_idio²(e,w,h)</span></div>
+      </div>
+      <div style="margin-top: 0.45rem; padding-top: 0.45rem; border-top: 1px dashed rgba(255,255,255,0.1); display: flex; gap: 1.2rem; font-size: 0.75rem; color: #94a3b8; flex-wrap: wrap;">
+        <span><b style="color: #e2e8f0;">e</b>: street / edge</span>
+        <span><b style="color: #e2e8f0;">d</b>: date</span>
+        <span><b style="color: #e2e8f0;">h</b>: hour (0–23)</span>
+        <span><b style="color: #e2e8f0;">w</b>: day group (Mon–Thu, Fri, Sat, Sun)</span>
+      </div>
+    </div>
+
+    <div class="grid-4" style="margin-top: 1.25rem;">
+      <div class="card">
+        <div class="card-num">LAYER 1</div>
+        <h3 style="color: var(--accent);">Baseline / Level (L)</h3>
+        <p style="margin-bottom: 0.4rem;">Log-mean flow. <em>How busy is this street?</em></p>
+        <span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent);">Uncertainty: Var(L(e)) from Σ</span>
+      </div>
+      <div class="card">
+        <div class="card-num">LAYER 2</div>
+        <h3 style="color: var(--emerald);">Rhythm / Shape (ρ)</h3>
+        <p style="margin-bottom: 0.4rem;">Log diurnal shape. <em>When is rush hour?</em></p>
+        <span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--emerald);">Uncertainty: σ_ρ²(e,w,h)</span>
+      </div>
+      <div class="card">
+        <div class="card-num">LAYER 3</div>
+        <h3 style="color: var(--rose);">Calendar (k)</h3>
+        <p style="margin-bottom: 0.4rem;">Holidays & seasonal shifts. <em>Known dates.</em></p>
+        <span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--rose);">Deterministic (Var = 0)</span>
+      </div>
+      <div class="card">
+        <div class="card-num">LAYER 4</div>
+        <h3 style="color: var(--amber);">Day Factor (f)</h3>
+        <p style="margin-bottom: 0.4rem;">Weather & special events. <em>Today's shock.</em></p>
+        <span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--amber);">Uncertainty: λ(e)²·Var(f(d))</span>
+      </div>
+    </div>
+
+    <!-- Idiosyncratic Noise Clarification -->
+    <div style="margin-top: 1rem; background: var(--panel); border: 1px solid var(--panel-border); border-left: 3px solid var(--text-dim); border-radius: 8px; padding: 0.6rem 1rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.83rem; color: var(--text-muted); box-shadow: var(--panel-shadow);">
+      <div>
+        <strong style="color: var(--text); font-family: var(--font-mono);">σ_idio²(e,w,h) (Natural Randomness):</strong>
+        Unavoidable day-to-day traffic variation — natural differences in vehicle arrivals that no model or extra sensors can remove.
+      </div>
+      <span style="font-family: var(--font-mono); font-size: 0.72rem; background: rgba(148, 163, 184, 0.15); color: var(--text-muted); padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 600; white-space: nowrap; margin-left: 1rem;">Pure Randomness</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: What We Save & Update Daily -->
+  <div class="slide" id="slide-4">
+    <span class="tag">Operational Engine · Dual Clocks</span>
+    <h2>What We Save and Update Every Day</h2>
+    <p class="lead">We maintain a joint Gaussian state in memory: vector <b>L</b>, covariance <b>Σ</b> (2,128 × 2,128), and shape precisions. The operational engine executes five core mathematical operations:</p>
+
+    <!-- Prerequisite / First Step: Ingestion & Isolation -->
+    <div style="background: var(--panel); border: 1px solid var(--panel-border); border-left: 4px solid var(--accent); border-radius: 10px; padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; box-shadow: var(--panel-shadow); flex-wrap: wrap;">
+      <div>
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase;">Prerequisite · Input Ingestion</div>
+        <div style="font-size: 0.95rem; font-weight: 700; color: var(--text); margin-top: 0.15rem;">Isolate True Traffic Shift from Sensor Counts</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">Strips away calendar seasonality $k(d)$ and city-wide weather shocks $\lambda \cdot f(d)$ from incoming counts to extract the true shift.</div>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 0.8rem; background: var(--accent-soft); color: var(--accent); padding: 0.5rem 0.8rem; border-radius: 8px; font-weight: 600; white-space: nowrap;">
+        y* = Count − k(d) − λ·f(d) &nbsp;|&nbsp; Shift = y* − L_prior
+      </div>
+    </div>
+
+    <!-- The 5 Core Operations -->
+    <div class="grid-5" style="margin-top: 1.1rem;">
+      <div class="card" style="border-top: 4px solid var(--amber);">
+        <div class="card-num">OP 01 · AGING</div>
+        <h3 style="color: var(--amber);">Evidence Fading</h3>
+        <p style="margin-bottom: 0.4rem;">Past tube counts fade gracefully via daily drift:</p>
+        <div style="font-family: var(--font-mono); font-size: 0.71rem; background: var(--amber-soft); color: var(--amber); padding: 0.35rem 0.45rem; border-radius: 6px; margin-bottom: 0.45rem;">
+          Σ += Q_day · Δt &nbsp;|&nbsp; P *= α
+        </div>
+        <p style="font-size: 0.8rem;">Unmeasured streets widen confidence bands over unobserved time.</p>
+      </div>
+
+      <div class="card" style="border-top: 4px solid var(--emerald);">
+        <div class="card-num">OP 02 · DIFFUSION</div>
+        <h3 style="color: var(--emerald);">Kalman Diffusion</h3>
+        <p style="margin-bottom: 0.4rem;">Spreads shift across joint covariance <b>Σ</b>:</p>
+        <div style="font-family: var(--font-mono); font-size: 0.71rem; background: var(--emerald-soft); color: var(--emerald); padding: 0.35rem 0.45rem; border-radius: 6px; margin-bottom: 0.45rem;">
+          L += Σ_{:, s} · S⁻¹ · Shift &nbsp;|&nbsp; Σ −= Gain
+        </div>
+        <p style="font-size: 0.8rem;">Updates mean volume (L) and tightens variance across <strong>all streets</strong>.</p>
+      </div>
+
+      <div class="card" style="border-top: 4px solid var(--accent);">
+        <div class="card-num">OP 03 · SENSORS</div>
+        <h3 style="color: var(--accent);">24h Shape Learning</h3>
+        <p style="margin-bottom: 0.4rem;">Fuses hourly counts into rush-hour curves:</p>
+        <div style="font-family: var(--font-mono); font-size: 0.71rem; background: var(--accent-soft); color: var(--accent); padding: 0.35rem 0.45rem; border-radius: 6px; margin-bottom: 0.45rem;">
+          ρ = Fuse(ρ_prior, robs) &nbsp;|&nbsp; P_ρ += w
+        </div>
+        <p style="font-size: 0.8rem;">Learns diurnal curve mean (ρ) & shrinks shape error on <strong>measured streets</strong>.</p>
+      </div>
+
+      <div class="card" style="border-top: 4px solid var(--violet);">
+        <div class="card-num">OP 04 · LEVEL (L)</div>
+        <h3 style="color: var(--violet);">Level Conservation</h3>
+        <p style="margin-bottom: 0.4rem;">Balances baseline flow at junctions:</p>
+        <div style="font-family: var(--font-mono); font-size: 0.71rem; background: var(--violet-soft); color: var(--violet); padding: 0.35rem 0.45rem; border-radius: 6px; margin-bottom: 0.45rem;">
+          min (L−L_p)ᵀ Σ⁻¹ (L−L_p) &nbsp;|&nbsp; In ≈ Out
+        </div>
+        <p style="font-size: 0.8rem;">Projects baseline volumes (L) onto physical Inflow ≈ Outflow across 3,299 junctions.</p>
+      </div>
+
+      <div class="card" style="border-top: 4px solid var(--rose);">
+        <div class="card-num">OP 05 · SHAPE (ρ)</div>
+        <h3 style="color: var(--rose);">Shape Propagation</h3>
+        <p style="margin-bottom: 0.4rem;">Optimizes network rhythm smoothness:</p>
+        <div style="font-family: var(--font-mono); font-size: 0.71rem; background: var(--rose-soft); color: var(--rose); padding: 0.35rem 0.45rem; border-radius: 6px; margin-bottom: 0.45rem;">
+          min ∑ W_ij ‖ρ_i − ρ_j‖² &nbsp;|&nbsp; s.t. ρ_M
+        </div>
+        <p style="font-size: 0.8rem;">Harmonizes rush-hour curves (ρ) and shape error (sd_shape) onto <strong>unmeasured streets</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Municipal Deliverables & Capabilities -->
+  <div class="slide" id="slide-5">
+    <span class="tag">Municipal Deliverables & Capabilities</span>
+    <h2>What We Deliver to City Planners</h2>
+    <p class="lead">Four high-value capabilities that transform municipal traffic management and urban planning:</p>
+
+    <div class="grid-2" style="margin-top: 1.25rem;">
+      <div class="card" style="border-left: 4px solid var(--accent);">
+        <div class="card-num">CAPABILITY 01 · HISTORICAL & LIVE</div>
+        <h3 style="color: var(--accent);">Daily Estimation & Historical Replay</h3>
+        <p style="margin-bottom: 0.5rem;"><em>What happened across the city on any specific date?</em></p>
+        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+          • Computes 24-hour flow curves and calibrated confidence bands for all 4,563 streets on date <b>d</b>.<br>
+          • Ingests live sensor counts and today's weather/event shock <code>f(d)</code>.<br>
+          • Delivers complete audit-ready historical volumes for traffic studies and environmental compliance.
+        </div>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--emerald);">
+        <div class="card-num">CAPABILITY 02 · FORWARD PLANNING</div>
+        <h3 style="color: var(--emerald);">Future & Seasonal Forecasting</h3>
+        <p style="margin-bottom: 0.5rem;"><em>What will traffic look like on upcoming dates?</em></p>
+        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+          • Predicts 24-hour traffic patterns for any future date (Day+1 to Day+365) or typical seasonal day.<br>
+          • Integrates 9-parameter calendar basis <code>k(d_future)</code> to capture holidays and vacation dips.<br>
+          • Honestly widens prediction bands to account for future weather and calendar uncertainty.
+        </div>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--amber);">
+        <div class="card-num">CAPABILITY 03 · MONITORING</div>
+        <h3 style="color: var(--amber);">Automated Anomaly & Detour Alerts</h3>
+        <p style="margin-bottom: 0.5rem;"><em>Early warning for unexpected traffic disruptions</em></p>
+        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+          • Statistical CUSUM monitors on active sensors automatically track unexpected flow deviations.<br>
+          • Detects unannounced road closures, construction detours, or accidents within 48 hours.<br>
+          • Triggers automated alerts before citizen complaints or traffic congestion escalate.
+        </div>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--violet);">
+        <div class="card-num">CAPABILITY 04 · SIMULATION</div>
+        <h3 style="color: var(--violet);">What-If Scenario Simulation</h3>
+        <p style="margin-bottom: 0.5rem;"><em>Simulating road closures & network changes</em></p>
+        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+          • Uses junction mass conservation and shape propagation to test planned civil works.<br>
+          • Simulates how closing a bridge or altering turning rules redirects traffic to neighboring streets.<br>
+          • Predicts spillover congestion and air quality impacts with full network uncertainty bounds.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Optimal Sensor Placement -->
+  <div class="slide" id="slide-6">
+    <span class="tag">Capital Optimization · Sensor Siting</span>
+    <h2>Where to Put the Next Sensor: Uncertain Throughput</h2>
+    <p class="lead">How our Movement-Component GMRF scores candidate physical sites by flow-weighted uncertain throughput reduction (veh/h):</p>
+
+    <div class="grid-2">
+      <div class="card" style="border-left: 4px solid var(--accent);">
+        <div class="card-num">THE METRIC</div>
+        <h3>Uncertain Throughput: U = ∑ Flow(e) · σ(e)</h3>
+        <p style="margin-bottom: 0.4rem;">Totals the actual <strong>uncertain vehicles/hour</strong> across all streets in the city:</p>
+        <div style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent); background: var(--accent-soft); padding: 0.45rem 0.65rem; border-radius: 6px; margin-bottom: 0.75rem;">
+          U = ∑ exp(L(e)) · √Var(L(e)) &nbsp;|&nbsp; ΔU(s) = ΔU_own + ΔU_reach
+        </div>
+        <ul style="padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          <li><strong style="color: var(--text);">Why flow-weight?</strong> Multiplying baseline flow <code>exp(L(e))</code> by uncertainty <code>σ(e) = √Var(L(e))</code> converts statistical variance into physical <strong>vehicles/hour</strong>, prioritizing busy arterial corridors over quiet alleys.</li>
+          <li><strong style="color: var(--emerald);">Reach Dominance:</strong> For top recommended sites in Södermalm, <strong>ΔU_reach accounts for a median 77% of total uncertainty reduction</strong> via covariance <b>Σ</b>!</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--emerald);">
+        <div class="card-num">STRATEGIC MUNICIPAL GUIDANCE</div>
+        <h3>Fleet Siting & Diminishing Returns</h3>
+        <div style="margin-bottom: 0.75rem;">
+          <h4 style="font-size: 0.93rem; color: var(--accent); margin-bottom: 0.15rem;">1. Physical Two-Way Sites</h4>
+          <p style="font-size: 0.83rem;">Roadside units observe both directions of two-way arterials, doubling sensor efficiency with zero extra civil works.</p>
+        </div>
+        <div style="margin-bottom: 0.75rem;">
+          <h4 style="font-size: 0.93rem; color: var(--emerald); margin-bottom: 0.15rem;">2. Sequential Greedy Selection</h4>
+          <p style="font-size: 0.83rem;">Fast low-rank Woodbury updates select the single best site, condition the global covariance, and pick the next in milliseconds.</p>
+        </div>
+        <div>
+          <h4 style="font-size: 0.93rem; color: var(--amber); margin-bottom: 0.15rem;">3. Budget Guidance</h4>
+          <p style="font-size: 0.83rem;">The first few strategic installations deliver the majority of reducible uncertainty, giving city planners clear stopping criteria for hardware budgets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Summary & Demos -->
+  <div class="slide" id="slide-7">
+    <span class="tag">Conclusion & Live Demo</span>
+    <h1>The Power of SonoFlow</h1>
+    <p class="lead">Sparse physical sensors become a dense, city-wide network of live virtual sensors. Accurate, fast, and capital efficient.</p>
+
+    <div class="grid-3" style="margin-top: 1.5rem;">
+      <div class="card" style="border-left: 4px solid var(--accent);">
+        <h3 style="color: var(--accent);">100% City Visibility</h3>
+        <p>Sparse physical counters are transformed into a coherent, city-wide virtual sensor network with calibrated confidence bands on every street.</p>
+      </div>
+      <div class="card" style="border-left: 4px solid var(--emerald);">
+        <h3 style="color: var(--emerald);">Capital-Efficient Siting</h3>
+        <p>Scores physical candidate sites by uncertain throughput reduction—up to 77% of total uncertainty reduction comes from network reach.</p>
+      </div>
+      <div class="card" style="border-left: 4px solid var(--violet);">
+        <h3 style="color: var(--violet);">Transparent & Audit-Ready</h3>
+        <p>Every single estimate is backed by an explicit 4-layer physical decomposition and full covariance audit trails for municipal engineering.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom Navigation Controls -->
+<div class="controls">
+  <div class="slide-counter" id="counter">01 / 07</div>
+  
+  <div class="dots" id="dots"></div>
+
+  <div class="nav-btns">
+    <button class="btn-nav" id="prevBtn" title="Previous Slide (Left Arrow)">←</button>
+    <button class="btn-nav" id="nextBtn" title="Next Slide (Right Arrow)">→</button>
+  </div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+
+const counter = document.getElementById('counter');
+const dotsContainer = document.getElementById('dots');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const themeBtn = document.getElementById('themeBtn');
+const themeIcon = document.getElementById('themeIcon');
+const themeText = document.getElementById('themeText');
+
+// Theme Switcher
+let currentTheme = 'light';
+themeBtn.addEventListener('click', () => {
+  if (currentTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    currentTheme = 'dark';
+    themeIcon.textContent = '☀️';
+    themeText.textContent = 'Light';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    currentTheme = 'light';
+    themeIcon.textContent = '🌙';
+    themeText.textContent = 'Dark';
+  }
+});
+
+// Initialize dots
+for (let i = 0; i < totalSlides; i++) {
+  const dot = document.createElement('div');
+  dot.classList.add('dot');
+  if (i === 0) dot.classList.add('active');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+}
+
+const dots = document.querySelectorAll('.dot');
+
+function updateSlide() {
+  slides.forEach((s, idx) => {
+    s.classList.toggle('active', idx === currentSlide);
+  });
+  dots.forEach((d, idx) => {
+    d.classList.toggle('active', idx === currentSlide);
+  });
+  counter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+}
+
+function nextSlide() {
+  if (currentSlide < totalSlides - 1) {
+    currentSlide++;
+    updateSlide();
+  }
+}
+
+function prevSlide() {
+  if (currentSlide > 0) {
+    currentSlide--;
+    updateSlide();
+  }
+}
+
+function goToSlide(idx) {
+  currentSlide = idx;
+  updateSlide();
+}
+
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+
+// Keyboard Navigation
+document.addEventListener('keydown', (e) => {
+  if (lockScreen && !lockScreen.classList.contains('unlocked')) return;
+  if (e.key === 'ArrowRight' || e.key === 'Space') {
+    nextSlide();
+  } else if (e.key === 'ArrowLeft') {
+    prevSlide();
+  }
+});
+
+// Authentication Logic
+// SHA-256 hash for password: 'sonoflow2026'
+const AUTH_HASH = '95dd06b59a360a1ca13bd68ed931384251154b7f1958f7984004b51bcb20ef24';
+const lockScreen = document.getElementById('lockScreen');
+const passInput = document.getElementById('passInput');
+const authError = document.getElementById('authError');
+
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Check session storage on load
+if (sessionStorage.getItem('sonoflow_deck_auth') === '1') {
+  lockScreen.classList.add('unlocked');
+}
+
+async function handleAuth(e) {
+  if (e) e.preventDefault();
+  const inputVal = passInput.value.trim();
+  if (!inputVal) return;
+  
+  const hash = await sha256(inputVal);
+  if (hash === AUTH_HASH) {
+    sessionStorage.setItem('sonoflow_deck_auth', '1');
+    lockScreen.classList.add('unlocked');
+    authError.style.display = 'none';
+  } else {
+    authError.style.display = 'block';
+    passInput.select();
+  }
+}
+</script>
+</body>
+</html>
