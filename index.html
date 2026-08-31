@@ -751,14 +751,14 @@ p.lead {
   <div class="slide" id="slide-5">
     <span class="tag">Municipal Deliverables & Capabilities</span>
     <h2>What We Deliver to City Planners</h2>
-    <p class="lead">Four high-value capabilities that transform municipal traffic management and urban planning:</p>
+    <p class="lead">Five high-value capabilities that transform municipal traffic management, intersection engineering, and urban planning:</p>
 
-    <div class="grid-2" style="margin-top: 1.25rem;">
+    <div class="grid-3" style="margin-top: 1.25rem;">
       <div class="card" style="border-left: 4px solid var(--accent);">
         <div class="card-num">CAPABILITY 01 · HISTORICAL & LIVE</div>
         <h3 style="color: var(--accent);">Daily Estimation & Historical Replay</h3>
-        <p style="margin-bottom: 0.5rem;"><em>What happened across the city on any specific date?</em></p>
-        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+        <p style="margin-bottom: 0.5rem;"><em>What happened on any specific date?</em></p>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.48;">
           • Computes 24-hour flow curves and calibrated confidence bands for all 4,563 streets on date <b>d</b>.<br>
           • Ingests live sensor counts and today's weather/event shock <code>f(d)</code>.<br>
           • Delivers complete audit-ready historical volumes for traffic studies and environmental compliance.
@@ -769,18 +769,29 @@ p.lead {
         <div class="card-num">CAPABILITY 02 · FORWARD PLANNING</div>
         <h3 style="color: var(--emerald);">Future & Seasonal Forecasting</h3>
         <p style="margin-bottom: 0.5rem;"><em>What will traffic look like on upcoming dates?</em></p>
-        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.48;">
           • Predicts 24-hour traffic patterns for any future date (Day+1 to Day+365) or typical seasonal day.<br>
           • Integrates 9-parameter calendar basis <code>k(d_future)</code> to capture holidays and vacation dips.<br>
           • Honestly widens prediction bands to account for future weather and calendar uncertainty.
         </div>
       </div>
 
+      <div class="card" style="border-left: 4px solid var(--cyan);">
+        <div class="card-num">CAPABILITY 03 · JUNCTION MOVEMENTS</div>
+        <h3 style="color: var(--cyan);">Intersection Turning Flows & Signal Timing</h3>
+        <p style="margin-bottom: 0.5rem;"><em>What % of traffic turns left vs goes straight?</em></p>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.48;">
+          • Delivers 24-hour turning transition probabilities <code>prob_turn</code> across all 6,494 legal movements.<br>
+          • Optimizes traffic light cycle splits and green-time allocation without expensive manual turning surveys.<br>
+          • Computes calibrated 80% confidence intervals for every turn volume in the city.
+        </div>
+      </div>
+
       <div class="card" style="border-left: 4px solid var(--amber);">
-        <div class="card-num">CAPABILITY 03 · MONITORING</div>
+        <div class="card-num">CAPABILITY 04 · MONITORING</div>
         <h3 style="color: var(--amber);">Automated Anomaly & Detour Alerts</h3>
         <p style="margin-bottom: 0.5rem;"><em>Early warning for unexpected traffic disruptions</em></p>
-        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.48;">
           • Statistical CUSUM monitors on active sensors automatically track unexpected flow deviations.<br>
           • Detects unannounced road closures, construction detours, or accidents within 48 hours.<br>
           • Triggers automated alerts before citizen complaints or traffic congestion escalate.
@@ -788,10 +799,10 @@ p.lead {
       </div>
 
       <div class="card" style="border-left: 4px solid var(--violet);">
-        <div class="card-num">CAPABILITY 04 · SIMULATION</div>
+        <div class="card-num">CAPABILITY 05 · SIMULATION</div>
         <h3 style="color: var(--violet);">What-If Scenario Simulation</h3>
         <p style="margin-bottom: 0.5rem;"><em>Simulating road closures & network changes</em></p>
-        <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.48;">
           • Uses junction mass conservation and shape propagation to test planned civil works.<br>
           • Simulates how closing a bridge or altering turning rules redirects traffic to neighboring streets.<br>
           • Predicts spillover congestion and air quality impacts with full network uncertainty bounds.
