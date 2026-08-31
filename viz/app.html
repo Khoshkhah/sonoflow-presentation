@@ -1325,16 +1325,17 @@ window.map = map;
     var lvlFactor = Math.exp(Z * d.sd).toFixed(2);
     
     var dObj = DAILY[k] || {};
-    var medFlows = estCurves[curDgIdx] || [];
-    var isTargetDay = (curDgIdx === META.target_dg_idx);
-    var loFlows = (isTargetDay && dObj.lo) ? dObj.lo : [];
-    var hiFlows = (isTargetDay && dObj.hi) ? dObj.hi : [];
+    // The estimate belongs to META.date and must not move when the user
+    // explores another weekday in the general forecast tabs.
+    var medFlows = estCurves[META.target_dg_idx] || [];
+    var loFlows = dObj.lo || [];
+    var hiFlows = dObj.hi || [];
     
     var hourFlow = medFlows[curHour] != null ? medFlows[curHour] : d.L;
     var hourLo = loFlows[curHour];
     var hourHi = hiFlows[curHour];
 
-    var isMeas = (isTargetDay && d.m === 1);
+    var isMeas = d.m === 1;
     var badge = isMeas
       ? '<span style="background:#d1fae5;color:#059669;border:1px solid #a7f3d0;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;">● Measured</span>'
       : '<span style="background:#fef3c7;color:#d97706;border:1px solid #fde68a;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;">○ Inferred (Prior + Graph)</span>';
@@ -1673,14 +1674,13 @@ window.map = map;
       var d = S[curEdgeKey];
       var dObj = DAILY[curEdgeKey] || {};
       if (d) {
-        var isTargetDay = (curDgIdx === META.target_dg_idx);
-        var isMeas = (isTargetDay && d.m === 1);
+        var isMeas = d.m === 1;
         var curves = d.c_fc || [];
         var estCurves = d.c_est || curves;
         var sds = d.s_fc || [];
-        var medFlows = estCurves[curDgIdx] || [];
-        var loFlows = (isTargetDay && dObj.lo) ? dObj.lo : [];
-        var hiFlows = (isTargetDay && dObj.hi) ? dObj.hi : [];
+        var medFlows = estCurves[META.target_dg_idx] || [];
+        var loFlows = dObj.lo || [];
+        var hiFlows = dObj.hi || [];
         var hourFlow = medFlows[curHour] != null ? medFlows[curHour] : d.L;
         var estLo = isMeas ? Math.round(hourFlow) : (loFlows[curHour] != null ? Math.round(loFlows[curHour]) : Math.round(hourFlow * 0.7));
         var estHi = isMeas ? Math.round(hourFlow) : (hiFlows[curHour] != null ? Math.round(hiFlows[curHour]) : Math.round(hourFlow * 1.3));
